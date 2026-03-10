@@ -1,0 +1,620 @@
+YPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHENAEUM OF UNFINISHED THINGS</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0a0c0e;
+            font-family: 'Cormorant Garamond', serif;
+            color: #d4c9b5;
+            line-height: 1.5;
+            padding: 2rem;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100, 80, 60, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(80, 60, 40, 0.1) 0%, transparent 30%);
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .study-panel {
+            background: rgba(20, 18, 16, 0.95);
+            border: 2px solid #5c4e3d;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .study-panel::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid #3a3329;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #b8a99a;
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 15px rgba(200, 180, 150, 0.3);
+            border-bottom: 2px solid #5c4e3d;
+            padding-bottom: 1rem;
+        }
+
+        h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #c4b5a0; margin: 2rem 0 1rem; letter-spacing: 2px; }
+        h3 { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #9b8b78; letter-spacing: 1px; margin-bottom: 0.5rem; }
+
+        .dialogue-box {
+            border-left: 4px solid #7c6b54;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: rgba(30, 26, 22, 0.6);
+        }
+
+        .speaker { font-family: 'Cinzel', serif; color: #d4b48c; font-size: 1.1rem; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .dialogue-text { font-style: italic; color: #b8aa99; font-size: 1.1rem; line-height: 1.6; }
+
+        .form-section { margin: 2rem 0; }
+        .form-group { margin-bottom: 1.5rem; }
+
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #b8a187;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            background: #1e1b17;
+            border: 2px solid #4a4035;
+            color: #d4c9b5;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #8b7a63; }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238b7a63'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5rem;
+        }
+
+        .tags-container { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+        .tag { background: #2a251f; border: 1px solid #5e5343; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; color: #b8a58c; }
+
+        /* ── TIMER BUTTON ── */
+        .btn-commit {
+            width: 100%;
+            padding: 1.2rem;
+            background: transparent;
+            border: 3px solid #7c6b54;
+            color: #d4b48c;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-commit:hover { background: #7c6b54; color: #0a0c0e; }
+        .btn-commit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Timer controls row */
+        .timer-controls {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 0.7rem;
+            background: transparent;
+            border: 2px solid #4a4035;
+            color: #b8a58c;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-small:hover { background: #2a251f; border-color: #7c6b54; }
+
+        /* ── TIMER DISPLAY ── */
+        .timer-display {
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            text-align: center;
+            color: #b8a58c;
+            margin: 1rem 0;
+            text-shadow: 0 0 20px rgba(180, 150, 120, 0.3);
+            transition: color 0.5s;
+        }
+
+        .timer-display.running { color: #d4b48c; text-shadow: 0 0 30px rgba(212, 180, 140, 0.5); }
+        .timer-display.paused  { color: #7c6b54; }
+        .timer-display.done    { color: #8b4040; text-shadow: 0 0 20px rgba(139, 64, 64, 0.5); }
+
+        /* Timer status label */
+        .timer-status {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: #5c4e3d;
+            margin-bottom: 0.5rem;
+            min-height: 1.2em;
+            transition: color 0.3s;
+        }
+
+        .progress-bar { width: 100%; height: 4px; background: #2a251f; margin: 1rem 0; position: relative; }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #8b7a63;
+            position: relative;
+            transition: width 1s linear;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0; top: -4px; bottom: -4px;
+            width: 2px;
+            background: #d4b48c;
+        }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; text-align: center; }
+        .stat-value { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #d4b48c; }
+        .stat-label { font-size: 0.9rem; color: #8b7a63; text-transform: uppercase; letter-spacing: 1px; }
+
+        .realm-panel {
+            background: rgba(18, 16, 14, 0.95);
+            border: 2px solid #5c4e3d;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .realm-panel::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid #3a3329;
+            pointer-events: none;
+        }
+
+        .cage-container { width: 100%; height: 400px; margin: 2rem 0; position: relative; display: flex; justify-content: center; align-items: center; }
+        .cage { position: relative; width: 350px; height: 380px; border: 3px solid #6b5c49; background: rgba(0,0,0,0.3); }
+
+        .cage-bars {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(107, 92, 73, 0.3) 20px, rgba(107, 92, 73, 0.3) 22px),
+                repeating-linear-gradient(0deg,  transparent, transparent 20px, rgba(107, 92, 73, 0.3) 20px, rgba(107, 92, 73, 0.3) 22px);
+            pointer-events: none;
+        }
+
+        .cage-glass { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(74, 64, 53, 0.2); backdrop-filter: blur(2px); }
+
+        .fairy-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 250px; z-index: 10; }
+        .fairy-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 20px rgba(212, 180, 140, 0.5)); }
+
+        @keyframes fairyGlow {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 15px #d4b48c); }
+            50%       { opacity: 1;   filter: drop-shadow(0 0 30px #e6c9a8); }
+        }
+        .fairy-glow { animation: fairyGlow 3s ease-in-out infinite; }
+
+        .glimmerglade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0; }
+
+        .glimmer-element { text-align: center; padding: 1.5rem; border: 1px solid #4a4035; background: rgba(30, 26, 22, 0.6); }
+        .element-title { font-family: 'Cinzel', serif; color: #b8a58c; font-size: 1rem; letter-spacing: 2px; margin: 0.5rem 0; }
+        .element-icon  { font-size: 2rem; color: #8b7a63; }
+        .element-desc  { font-size: 0.9rem; color: #7a6b58; font-style: italic; }
+        .element-health { height: 2px; background: #2a251f; margin: 1rem 0; }
+        .health-fill    { height: 100%; width: 80%; background: #8b7a63; }
+        .petrified .health-fill { background: #5a4f42; }
+
+        .chain-container { display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0; }
+        .chain-link { width: 30px; height: 30px; border: 2px solid #5e5343; border-radius: 50%; transition: background 0.4s, border-color 0.4s; }
+        .chain-link.forged { background: #8b7a63; border-color: #b8a58c; }
+
+        .lore-fragment { border: 2px solid #5e5343; padding: 1rem; margin: 1rem 0; cursor: pointer; }
+        .lore-fragment:hover { border-color: #8b7a63; }
+        .lore-title  { font-family: 'Cinzel', serif; color: #b8a58c; font-size: 1rem; }
+        .lore-secret { font-size: 0.9rem; color: #6b5c49; margin-top: 0.5rem; }
+
+        @media (max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+
+    <!-- LEFT PANEL -->
+    <div class="study-panel">
+        <h1>ATHENAEUM OF UNFINISHED THINGS</h1>
+
+        <div class="dialogue-box">
+            <div class="speaker">LYRIA, THE FAE OF FOCUS</div>
+            <div class="dialogue-text">"The air here is thick with unmade decisions. I am Lyria, bound in the calculus of your attention. The world behind me reflects the quality of your thought. Will you let it bloom, or let it turn to quiet stone? Your clock is now a heartbeat. Let's begin."</div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label>FOCUS STREAM DECLARATION</label>
+                <textarea rows="3" placeholder="Declare your intended work..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>SUBJECT DOMAIN</label>
+                <select>
+                    <option>Deep Dive (Research)</option>
+                    <option>Creative Synthesis</option>
+                    <option>Memory & Recall</option>
+                    <option>Routine Building</option>
+                    <option>Problem Solving</option>
+                    <option>Interdisciplinary</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>ADDITIONAL TAGS</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="tagInput" placeholder="Add tags...">
+                    <button onclick="addTag()" style="padding: 1rem; background: #2a251f; border: 2px solid #4a4035; color: #d4c9b5; cursor:pointer;">+</button>
+                </div>
+                <div class="tags-container" id="tagsContainer">
+                    <span class="tag">java</span>
+                    <span class="tag">programming</span>
+                </div>
+            </div>
+
+            <!-- FIX 1: onclick="startFocus()" added -->
+            <button class="btn-commit" id="commitBtn" onclick="startFocus()">COMMIT TO FOCUS</button>
+        </div>
+
+        <!-- Timer status label -->
+        <div class="timer-status" id="timerStatus">READY</div>
+
+        <!-- FIX 2: id="timer" added -->
+        <div class="timer-display" id="timer">25:00</div>
+
+        <!-- Pause / Reset controls -->
+        <div class="timer-controls">
+            <button class="btn-small" onclick="pauseResume()" id="pauseBtn">PAUSE</button>
+            <button class="btn-small" onclick="resetTimer()">RESET</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="stats-grid">
+            <div>
+                <div class="stat-value" id="lumens">142</div>
+                <div class="stat-label">LUMENS</div>
+            </div>
+            <div>
+                <div class="stat-value" id="chainCount">7</div>
+                <div class="stat-label">CHAIN</div>
+            </div>
+            <div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">FAIRIES</div>
+            </div>
+        </div>
+
+        <h3>CHAIN OF CONCENTRATION</h3>
+        <div class="chain-container" id="chainLinks">
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+            <div class="chain-link forged"></div>
+        </div>
+
+        <h3 style="margin-top: 2rem;">TODAY'S COMMITMENTS</h3>
+        <div style="margin: 1rem 0;" id="taskList">
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; border-bottom: 1px solid #3a3329;">
+                <input type="checkbox" style="width: 20px; height: 20px;" onchange="taskDone(this)">
+                <span>Complete Java inheritance chapter</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; border-bottom: 1px solid #3a3329;">
+                <input type="checkbox" style="width: 20px; height: 20px;" onchange="taskDone(this)">
+                <span>Practice polymorphism exercises</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="realm-panel">
+        <h2>GLIMMERGLADE REALM</h2>
+
+        <div class="cage-container">
+            <div class="cage">
+                <div class="cage-bars"></div>
+                <div class="cage-glass"></div>
+                <div class="fairy-container">
+                    <svg class="fairy-svg fairy-glow" viewBox="0 0 200 250">
+                        <circle cx="100" cy="120" r="70" fill="rgba(212, 180, 140, 0.15)">
+                            <animate attributeName="r" values="65;75;65" dur="4s" repeatCount="indefinite"/>
+                        </circle>
+                        <ellipse cx="100" cy="140" rx="28" ry="40" fill="#c4a58b" />
+                        <path d="M72 140 L100 180 L128 140" fill="#a88b72" opacity="0.6"/>
+                        <path d="M60 100 Q40 80 30 100 Q20 120 40 120 Q50 130 60 120" fill="rgba(212,180,140,0.4)" stroke="#d4b48c" stroke-width="1">
+                            <animate attributeName="d" values="M60 100 Q40 80 30 100 Q20 120 40 120 Q50 130 60 120;M60 95 Q40 75 30 95 Q20 115 40 115 Q50 125 60 115;M60 100 Q40 80 30 100 Q20 120 40 120 Q50 130 60 120" dur="3s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M140 100 Q160 80 170 100 Q180 120 160 120 Q150 130 140 120" fill="rgba(212,180,140,0.4)" stroke="#d4b48c" stroke-width="1">
+                            <animate attributeName="d" values="M140 100 Q160 80 170 100 Q180 120 160 120 Q150 130 140 120;M140 95 Q160 75 170 95 Q180 115 160 115 Q150 125 140 115;M140 100 Q160 80 170 100 Q180 120 160 120 Q150 130 140 120" dur="3s" repeatCount="indefinite"/>
+                        </path>
+                        <circle cx="85" cy="120" r="4" fill="#f0e4d0"/>
+                        <circle cx="115" cy="120" r="4" fill="#f0e4d0"/>
+                        <circle cx="87" cy="120" r="2" fill="#2a251f"/>
+                        <circle cx="117" cy="120" r="2" fill="#2a251f"/>
+                        <path d="M90 135 Q100 145 110 135" stroke="#a88b72" stroke-width="2" fill="none"/>
+                        <path d="M80 95 Q90 85 100 95 Q110 85 120 95" stroke="#8b7355" stroke-width="4" fill="none"/>
+                        <circle cx="60" cy="80" r="2" fill="#d4b48c" opacity="0.8">
+                            <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="140" cy="80" r="2" fill="#d4b48c" opacity="0.8">
+                            <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.3s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>CAGE CLARITY</span>
+                <span id="clarityPct">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="clarityBar" style="width:0%;"></div>
+            </div>
+        </div>
+
+        <div class="glimmerglade-grid">
+            <div class="glimmer-element">
+                <div class="element-icon">💧</div>
+                <div class="element-title">MEMORY FOUNTAIN</div>
+                <div class="element-health"><div class="health-fill" style="width: 80%"></div></div>
+                <div class="element-desc">Flowing with memories</div>
+            </div>
+            <div class="glimmer-element petrified">
+                <div class="element-icon">🌳</div>
+                <div class="element-title">ANCIENT TREE</div>
+                <div class="element-health"><div class="health-fill" style="width: 45%"></div></div>
+                <div class="element-desc">Partially petrified</div>
+            </div>
+            <div class="glimmer-element">
+                <div class="element-icon">✨</div>
+                <div class="element-title">CRYSTAL BRIDGE</div>
+                <div class="element-health"><div class="health-fill" style="width: 90%"></div></div>
+                <div class="element-desc">Prismatic and strong</div>
+            </div>
+        </div>
+
+        <div class="lore-fragment" onclick="revealLore(this)">
+            <div class="lore-title">THE GRANITE MOTH'S SECRET</div>
+            <div class="lore-secret" id="loreText">Click to reveal →</div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <h3>CHAIN OF CONCENTRATION</h3>
+            <div class="chain-container" id="chainLinksRight">
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+                <div class="chain-link forged"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ── TIMER STATE ──────────────────────────────────────────
+const TOTAL_SECONDS = 25 * 60;
+let timeLeft      = TOTAL_SECONDS;
+let timerRunning  = false;
+let isPaused      = false;
+let interval      = null;
+let sessionsComplete = 0;
+
+const timerEl     = document.getElementById('timer');
+const statusEl    = document.getElementById('timerStatus');
+const commitBtn   = document.getElementById('commitBtn');
+const pauseBtn    = document.getElementById('pauseBtn');
+const progressFill = document.getElementById('progressFill');
+const clarityBar  = document.getElementById('clarityBar');
+const clarityPct  = document.getElementById('clarityPct');
+
+// ── RENDER TIMER ─────────────────────────────────────────
+function renderTimer() {
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    timerEl.textContent = m + ':' + (s < 10 ? '0' + s : s);
+
+    // Progress bar = elapsed / total
+    const elapsed  = TOTAL_SECONDS - timeLeft;
+    const pct      = Math.round((elapsed / TOTAL_SECONDS) * 100);
+    progressFill.style.width = pct + '%';
+
+    // Cage clarity mirrors progress
+    clarityBar.style.width = pct + '%';
+    clarityPct.textContent = pct + '%';
+}
+
+// ── START ─────────────────────────────────────────────────
+function startFocus() {
+    if (timerRunning) return;        // already running
+
+    timerRunning = true;
+    isPaused     = false;
+
+    timerEl.classList.add('running');
+    timerEl.classList.remove('paused', 'done');
+    statusEl.textContent = 'FOCUSING';
+    statusEl.style.color = '#d4b48c';
+    commitBtn.disabled   = true;
+    pauseBtn.textContent = 'PAUSE';
+
+    interval = setInterval(tick, 1000);
+}
+
+// ── TICK ──────────────────────────────────────────────────
+function tick() {
+    if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerRunning = false;
+        timerEl.classList.replace('running', 'done');
+        statusEl.textContent = 'SESSION COMPLETE';
+        statusEl.style.color = '#8b4040';
+        commitBtn.disabled   = false;
+        pauseBtn.textContent = 'PAUSE';
+
+        // Award lumens + extend chain
+        sessionsComplete++;
+        const lumensEl = document.getElementById('lumens');
+        lumensEl.textContent = parseInt(lumensEl.textContent) + 20;
+        extendChain();
+        return;
+    }
+
+    timeLeft--;
+    renderTimer();
+}
+
+// ── PAUSE / RESUME ────────────────────────────────────────
+function pauseResume() {
+    if (!timerRunning && !isPaused) return;   // never started
+
+    if (!isPaused) {
+        // Pause
+        clearInterval(interval);
+        isPaused = true;
+        timerEl.classList.replace('running', 'paused');
+        statusEl.textContent = 'PAUSED';
+        statusEl.style.color = '#7c6b54';
+        pauseBtn.textContent = 'RESUME';
+    } else {
+        // Resume
+        isPaused = false;
+        timerEl.classList.replace('paused', 'running');
+        statusEl.textContent = 'FOCUSING';
+        statusEl.style.color = '#d4b48c';
+        pauseBtn.textContent = 'PAUSE';
+        interval = setInterval(tick, 1000);
+    }
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetTimer() {
+    clearInterval(interval);
+    timerRunning = false;
+    isPaused     = false;
+    timeLeft     = TOTAL_SECONDS;
+
+    timerEl.classList.remove('running', 'paused', 'done');
+    statusEl.textContent = 'READY';
+    statusEl.style.color = '#5c4e3d';
+    commitBtn.disabled   = false;
+    pauseBtn.textContent = 'PAUSE';
+    renderTimer();
+}
+
+// ── CHAIN ─────────────────────────────────────────────────
+function extendChain() {
+    ['chainLinks','chainLinksRight'].forEach(id => {
+        const container = document.getElementById(id);
+        const newLink   = document.createElement('div');
+        newLink.className = 'chain-link forged';
+        container.appendChild(newLink);
+    });
+    const cc = document.getElementById('chainCount');
+    cc.textContent = parseInt(cc.textContent) + 1;
+}
+
+// ── TASK DONE ─────────────────────────────────────────────
+function taskDone(checkbox) {
+    const span = checkbox.nextElementSibling;
+    if (checkbox.checked) {
+        span.style.textDecoration = 'line-through';
+        span.style.color = '#5c4e3d';
+        const lumensEl = document.getElementById('lumens');
+        lumensEl.textContent = parseInt(lumensEl.textContent) + 10;
+    } else {
+        span.style.textDecoration = '';
+        span.style.color = '';
+    }
+}
+
+// ── TAGS ──────────────────────────────────────────────────
+function addTag() {
+    const input = document.getElementById('tagInput');
+    const val   = input.value.trim();
+    if (!val) return;
+    const tag   = document.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = val;
+    document.getElementById('tagsContainer').appendChild(tag);
+    input.value = '';
+}
+
+document.getElementById('tagInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addTag();
+});
+
+// ── LORE REVEAL ───────────────────────────────────────────
+function revealLore(el) {
+    document.getElementById('loreText').textContent =
+        'The Granite Moth feeds on scattered attention. When focus breaks, it settles — turning the world to stone. Only the unwavering can keep it at bay.';
+    el.style.borderColor = '#8b7a63';
+}
+
+// ── INIT ──────────────────────────────────────────────────
+renderTimer();   // show 25:00 immediately
+</script>
+</body>
+</html>
